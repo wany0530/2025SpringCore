@@ -13,11 +13,18 @@ public class OrderServiceImpl implements OrderService
     // DiscountPolicy ( 역할 ) / FixDiscountPolicy, RateDiscountPolicy ( 구현 )
     // 다형성도 활요하고, 인터페이스와 구현 객체를 분리했다 -> O ->
 
-    private final MemberRepository memberRepository = new MemoryMemberRepository();
+//    private final MemberRepository memberRepository = new MemoryMemberRepository();
 //    private final DiscountPolicy discountPolicy = new FixDiscountPolicy(); //DIP 위반이다.
 //    private final DiscountPolicy discountPolicy = new RateDiscountPolicy(); //DIP 위반이다.
+
+    private final MemberRepository memberRepository;
     private DiscountPolicy discountPolicy; //DIP 위반 X.
 
+    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy)
+    {
+        this.memberRepository = memberRepository;
+        this.discountPolicy = discountPolicy;
+    }
 
     @Override
     public Order createOrder(Long memberId, String itemName, int itemPrice)
